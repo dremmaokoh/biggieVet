@@ -1,36 +1,33 @@
-const jwt = require('jsonwebtoken');
-const { passwordHash, passwordCompare } = require('../helper/hashing');
-const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
+const { passwordHash, passwordCompare } = require("../helper/hashing");
+const bcrypt = require("bcrypt");
 
-const User = require('../models/models.user');
+const User = require("../models/models.user");
 
 const {
   signUp,
-  findAll,
-  updateAUser,
-  deleteAll,
   findUserByEmail,
-  findUsersById,
   findUserByNumber,
-} = require('../services/user.services');
-const {
-  registerValidation,
-  loginValidation,
-} = require('../validation/validation');
+} = require("../services/user.services");
 
-const { jwtSign, jwtVerify } = require('../helper/jwt');
+const { jwtSign } = require("../helper/jwt");
 
 exports.signUp = async (req, res, next) => {
   try {
     const { name, email, password, phoneNumber } = req.body;
 
-    const isExisting = await findUserByEmail(email);
+    const isExisting = await findUserByNumber(email);
     if (isExisting) {
       return res.status(409).json({
-        message: 'Email Already existing',
+        message: "Email Already existing",
       });
     }
-
+    const sameNumber = await findUserByNumber(phoneNumber);
+    if (sameNumber) {
+      return res.status(409).json({
+        message: "Phone Number Already existing",
+      });
+    }
     const hashedPassword = await passwordHash(password);
 
     const data = {
@@ -41,7 +38,7 @@ exports.signUp = async (req, res, next) => {
     };
     const new_user = await signUp(data);
 
-    return res.status(201).json({ message: 'successfully added', new_user });
+    return res.status(201).json({ message: "successfully added", new_user });
   } catch (error) {
     next(error);
   }
@@ -50,23 +47,17 @@ exports.signUp = async (req, res, next) => {
 exports.loginUser = async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    // const validation = loginValidation(req.body);
-    // if (validation.error)
-    //   return res
-    //     .status(400)
-    //     .json({ message: validation.error.details[0].message });
-
     const user = await findUserByEmail(email);
     if (!user) {
       return res.status(409).json({
-        message: 'Email Already existing',
+        message: "Email Already existing",
       });
     }
     //  validate password
     const isMatch = await passwordCompare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({
-        message: 'Invalid credentials',
+        message: "Invalid credentials",
       });
     }
 
@@ -75,10 +66,10 @@ exports.loginUser = async (req, res, next) => {
     };
 
     const token = jwtSign(payload);
-    res.cookie('access_token', token, { httpOnly: true });
+    res.cookie("access_token", token, { httpOnly: true });
     const dataInfo = {
-      status: 'success',
-      message: 'Login success',
+      status: "success",
+      message: "Login success",
       access_token: token,
     };
     return res.status(200).json(dataInfo);

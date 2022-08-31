@@ -1,11 +1,19 @@
-const router = require('express').Router();
-const upload = require('../utils/multer')
-const { addPet } = require('../controller/controller.pet');
-const { isAuth, validateAdmin } = require('../middleware/isAuth');
-const path = require('path');
+const router = require("express").Router();
+const upload = require("../utils/multer");
+const {
+  addPet,
+  updatePet,
+  deletePet,
+} = require("../controller/controller.pet");
+const { isAuth, validateAdmin } = require("../middleware/isAuth");
 
-
-
-// create a new house
-router.post('/create', isAuth, validateAdmin, upload.single('photo'), addPet);
+router.post(
+  "/create",
+  isAuth,
+  validateAdmin,
+  upload.single("petPicture"),
+  addPet
+);
+router.put("/update/:id", isAuth, validateAdmin, updatePet);
+router.delete("/delete/:id", isAuth, validateAdmin, deletePet);
 module.exports = router;
