@@ -1,7 +1,7 @@
 // Importing our packages
 const express = require("express");
 const server = express();
-const http = require('http');
+//const http = require('http');
 const morgan = require("morgan");
 require("dotenv").config();
 const path = require("path");
@@ -20,10 +20,8 @@ server.use(express.json());
 
 server.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "static/index.html"));
-})
-server.all("*", (req, res) => {
-    return res.status(404).json({ message: "Page not found" });
-  });
+});
+
 server.use("/api/pet", pet_router);
 server.use("/api/user", user_router);
 
