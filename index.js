@@ -1,12 +1,10 @@
 // Importing our packages
 const express = require("express");
 const server = express();
-//const http = require('http');
 const morgan = require("morgan");
 require("dotenv").config();
 const path = require("path");
 const connectDB = require("./config/db.js");
-
 const pet_router = require("./routes/routes.pet");
 const user_router = require("./routes/routes.user");
 
@@ -18,10 +16,7 @@ server.use(morgan("dev"));
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
 
-server.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "static/index.html"));
-});
-
+servwe.get('/', (req, res) => res.send('WELCOME TO BIGGIEVET: where your pets get the best care... 🐕🐈🐏🐄🐖🐐'));
 server.use("/api/pet", pet_router);
 server.use("/api/user", user_router);
 
