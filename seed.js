@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async (req, res) => {
   try {
-    await mongoose.connect('mongodb://0.0.0.0:27017/biggieVet', {
+    await mongoose.connect("mongodb+srv://biggievet:oladara@cluster0.h0wjkeu.mongodb.net/?retryWrites=true&w=majority", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
@@ -25,7 +25,7 @@ const data = {
 
   const seedDatabase = async () => {
     try {
-      await User.deleteMany({});
+     // await User.deleteMany({});
       await User.insertMany(data);
       console.log('Seeding successful');
     } catch (error) {

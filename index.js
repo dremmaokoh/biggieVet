@@ -3,18 +3,24 @@ const express = require('express');
 const server = express();
 const morgan = require('morgan');
 require('dotenv').config();
+const connectDB = require ('./config/db.js');
 
 
-const router = require('./routes/user.routes');
-const connectDB = require('./database/db');
+const pet_router = require('./routes/routes.pet');
+const user_router = require('./routes/routes.user');
+
 
 //Connecting to database 
 connectDB()
 
 //middleware
 server.use(morgan('dev'));
+server.use(express.urlencoded({extended:true}));
 server.use(express.json());
-server.use ('/api', router);
+
+server.get('/', (req, res) => res.send ('WELCOME TO BIGGIEVET🐕🐈🐔🐐🐖🐄🐏'));
+server.use ('/api/pet', pet_router);
+server.use('/api/user', user_router);
 
 const port = process.env.PORT || 7895;
  

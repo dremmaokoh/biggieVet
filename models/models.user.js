@@ -8,17 +8,15 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: [true, 'Please enter a valid name'],
-      unique: true
+
     },
      phoneNumber: {
         type: String,
         required: [true, 'Please enter a valid phone number'],
-        unique: true
      },
     email: {
       type: String,
       required: true,
-      unique: true,
       validate(value) {
         if (!validator.isEmail(value)) {
           throw new Error('Email is invalid');
@@ -30,7 +28,6 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       minLength: 7,
-      unique: true,
       required: true,
       validate(value) {
         if (value.toLowerCase().includes('pass')) {
