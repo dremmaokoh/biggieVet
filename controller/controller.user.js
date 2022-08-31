@@ -48,18 +48,18 @@ exports.signUp = async (req, res, next) => {
 };
 
 exports.loginUser = async (req, res, next) => {
-  const { phoneNumber, password } = req.body;
+  const { email, password } = req.body;
   try {
-    const validation = loginValidation(req.body);
-    if (validation.error)
-      return res
-        .status(400)
-        .json({ message: validation.error.details[0].message });
+    // const validation = loginValidation(req.body);
+    // if (validation.error)
+    //   return res
+    //     .status(400)
+    //     .json({ message: validation.error.details[0].message });
 
-    const user = await findUserByNumber({ phoneNumber });
+    const user = await findUserByEmail(email);
     if (!user) {
       return res.status(409).json({
-        message: 'Invalid Number',
+        message: 'Email Already existing',
       });
     }
     //  validate password
