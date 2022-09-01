@@ -16,7 +16,7 @@ server.use(morgan("dev"));
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
 
-serve.get('/', (req, res) => res.send('WELCOME TO BIGGIEVET: where your pets get the best care... 🐕🐈🐏🐄🐖🐐'));
+server.get('/', (req, res) => res.send('WELCOME TO BIGGIEVET: where your pets get the best care... 🐕🐈🐏🐄🐖🐐'));
 server.use("/api/pet", pet_router);
 server.use("/api/user", user_router);
 
