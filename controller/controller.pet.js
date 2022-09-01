@@ -100,7 +100,7 @@ exports.orderPet = async (req, res) => {
         new: true,
       }
     );
-    if ((pet.isAvailable = 0 || pet.isAvailable < 0)) {
+    if ((pet.isAvailable < 0)) {
       return res.status(404).json({
         message: "Pet Not Available",
       });

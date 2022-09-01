@@ -53,7 +53,6 @@ exports.loginUser = async (req, res, next) => {
         message: "Email Already existing",
       });
     }
-    //  validate password
     const isMatch = await passwordCompare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({
