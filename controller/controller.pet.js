@@ -90,7 +90,7 @@ exports.findPets = async (req, res, next) => {
 
 exports.orderPet = async (req, res) => {
   try {
-    const id  req.params.id;
+    const id = req.params.id;
     const pet = await Pet.findOneAndUpdate(
       { _id: id },
       {
