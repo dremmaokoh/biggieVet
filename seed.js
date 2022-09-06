@@ -26,6 +26,8 @@ connectDB();
     password: 'emmanuelokoh',
     phoneNumber: '08162291341',
     role: 'admin',
+
+    
   };
   let saltRounds = 10;
   let hashedPassword = await bcrypt.hash(data.password, saltRounds);
@@ -33,6 +35,9 @@ connectDB();
   data.password = hashedPassword;
   console.log(data.password);
 
+  
+
+  
   const seedDatabase = async () => {
     try {
       await User.deleteMany({});

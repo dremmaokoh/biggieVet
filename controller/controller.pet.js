@@ -90,7 +90,7 @@ exports.findPets = async (req, res, next) => {
 
 exports.orderPet = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id  req.params.id;
     const pet = await Pet.findOneAndUpdate(
       { _id: id },
       {
@@ -100,7 +100,9 @@ exports.orderPet = async (req, res) => {
         new: true,
       }
     );
-    if ((pet.isAvailable < 0)) {
+    if ((pet.isAvailable < 0 )) {
+      pet.isAvailable = 0
+      await pet.save()
       return res.status(404).json({
         message: "Pet Not Available",
       });
